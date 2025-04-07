@@ -3,7 +3,9 @@ package com.igniteedcuation.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +27,9 @@ public class Enrollment {
 
     @OneToMany(mappedBy = "enrollmentsDone")
     private Set<Lesson> lessonsDone = new HashSet<>();
+
+    @OneToMany(mappedBy = "enrollment")
+    private List<Deliver> deliveries = new ArrayList<>();
 
     public Enrollment() {
     }
@@ -84,5 +89,9 @@ public class Enrollment {
 
     public void setEnrollMoment(Instant enrollMoment) {
         this.enrollMoment = enrollMoment;
+    }
+
+    public List<Deliver> getDeliveries() {
+        return deliveries;
     }
 }

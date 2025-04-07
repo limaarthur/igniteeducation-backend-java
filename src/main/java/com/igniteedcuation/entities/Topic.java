@@ -3,9 +3,7 @@ package com.igniteedcuation.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_topic")
@@ -35,11 +33,18 @@ public class Topic {
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
+    @ManyToOne
+    @JoinColumn(name = "reply_id")
+    private Reply answer;
+
     @ManyToMany
     @JoinTable(name = "tb_topic_likes",
             joinColumns = @JoinColumn(name = "topic_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "topic")
+    private List<Reply> replies = new ArrayList<>();
 
     public Topic() {
     }
@@ -113,6 +118,18 @@ public class Topic {
 
     public Set<User> getLikes() {
         return likes;
+    }
+
+    public Reply getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Reply answer) {
+        this.answer = answer;
+    }
+
+    public List<Reply> getReplies() {
+        return replies;
     }
 
     @Override
